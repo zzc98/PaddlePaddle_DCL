@@ -1,6 +1,6 @@
 # 基于 PaddlePaddle 实现 DCL （CVPR2019）
 
-@[TOC]( )
+[TOC]
 
 
 ## 1. 简介
