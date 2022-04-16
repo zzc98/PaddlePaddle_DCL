@@ -1,0 +1,13 @@
+===========================train_params===========================
+model_name:DCLNet
+python:python3.7
+gpu_list:0
+use_gpu:True
+trainer:norm_train
+norm_train:main.py  --gpus=3 --data=CUB_TINY --backbone=resnet50 --epoch=1 --T_max=60 --tb=8 --vb=8 --tnw=8 --vnw=8 --lr=0.001 --start_epoch=0 --detail=dcl_cub --size=512 --crop=448 --swap_num=7
+##
+===========================eval_params===========================
+eval:null
+null:null
+===========================infer_params===========================
+inference:predict.py --data CUB --img resources/Black_Footed_Albatross_0001_796111.jpg
