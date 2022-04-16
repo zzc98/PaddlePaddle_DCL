@@ -1,0 +1,4 @@
+python test.py --gpus=3 --data=CUB --pdparams=./outputs/CUB/checkpoints/dcl_cub-20220416-183150.pdparams --vb=8 --vnw=8 --size=512 --swap_num=7
+python test.py --gpus=3 --data=STCAR --pdparams=./outputs/STCAR/checkpoints/dcl_car-20220416-100532.pdparams --vb=8 --vnw=8 --size=512 --swap_num=7
+Run successfully with command - python3.7 main.py  --gpus=3 --data=CUB_TINY --backbone=resnet50 --epoch=1 --T_max=60 --tb=8 --vb=8 --tnw=8 --vnw=8 --lr=0.001 --start_epoch=0 --detail=dcl_cub --size=512 --crop=448 --swap_num=7!
+python test.py --gpus=3 --data=AIR --pdparams=./outputs/AIR/checkpoints/dcl_air-20220416-100902.pdparams --vb=8 --vnw=8 --size=512 --swap_num=2
