@@ -1,4 +1,4 @@
-﻿import os
+import os
 import argparse
 import paddle
 import pandas as pd
@@ -23,21 +23,21 @@ class LoadConfig:
     def __init__(self, args):
         self.describe = args.describe
         # 预训练权重
-        self.pretrained_model = '/data/models/resnet50.pdparams'
+        self.pretrained_model = '/data/zhangzichao/models/resnet50.pdparams'
         # 数据集信息
         if args.dataset == 'CUB':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/CUB/images'
+            self.rawdata_root = '/data/zhangzichao/datasets/CUB/images'
             self.anno_root = './datasets/CUB'
             self.numcls = 200
         elif args.dataset == 'STCAR':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/StanfordCars/car_ims/'
+            self.rawdata_root = '/data/zhangzichao/datasets/StanfordCars/car_ims/'
             self.anno_root = './datasets/STCAR'
             self.numcls = 196
         elif args.dataset == 'AIR':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/fgvc-aircraft-2013b/data/images/'
+            self.rawdata_root = '/data/zhangzichao/datasets/fgvc-aircraft-2013b/data/images/'
             self.anno_root = './datasets/AIR'
             self.numcls = 100
         elif args.dataset == 'CUB_TINY':
@@ -52,7 +52,6 @@ class LoadConfig:
                                       names=['ImageName', 'label'])
         self.test_anno = pd.read_csv(os.path.join(self.anno_root, 'test.txt'), sep=",", header=None,
                                      names=['ImageName', 'label'])
-        self.ls = args.label_smooth
 
         self.save_dir = f'./outputs/{args.dataset}/checkpoints'
         if not os.path.exists(self.save_dir):
