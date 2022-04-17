@@ -59,6 +59,14 @@ Destruction and Construction Learning for Fine-grained Image Recognition 提出�
 - [PaddlePaddle](https://www.paddlepaddle.org.cn/documentation/docs/en/install/index_en.html): 2.2.2
 - 硬件：NVIDIA 3090Ti
 
+python库：
+
+- numpy: 1.20.3
+- pandas: 1.2.4
+- Pillow: 8.2.0
+- tqdm: 4.60.0 
+
+
 ## 4. 快速开始
 
 ### 4.1 下载数据集
