@@ -7,9 +7,10 @@ from utils.eval_model import eval_turn
 from utils.utils import LabelSmoothingCrossEntropy
 
 
-def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_loader):
+def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_loader, date_suffix, ls):
     # 日志
-    date_suffix = time.strftime('%Y%m%d-%H%M%S')
+    if date_suffix is None:
+        date_suffix = time.strftime('%Y%m%d-%H%M%S')
     log_file = f'{config.log_folder}/{config.describe}-{date_suffix}.log'
     save_params = f'{config.save_dir}/{config.describe}-{date_suffix}.pdparams'
     best_acc = 0
@@ -17,7 +18,7 @@ def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_load
     # 训练
     beta = 1
     gamma = 0.01 if config.dataset == 'STCAR' or config.dataset == 'AIR' else 1
-    get_ce_loss = LabelSmoothingCrossEntropy()
+    get_ce_loss = LabelSmoothingCrossEntropy(epsilon=ls)
     add_loss = nn.L1Loss()
     for epoch in range(start_epoch, epoch_num):
         scheduler.step(epoch)
