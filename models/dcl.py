@@ -9,7 +9,7 @@ class DCLNet(nn.Layer):
         self.num_classes = config.numcls
         # 主干网络
         self.model = resnet.resnet50()
-        self.model.load_dict(paddle.load(config.pretrained_model))
+        # self.model.load_dict(paddle.load(config.pretrained_model))
         self.model = nn.Sequential(*list(self.model.children())[:-2])
         self.avg_pool = nn.AdaptiveAvgPool2D((1, 1))
 
@@ -25,10 +25,11 @@ class DCLNet(nn.Layer):
         mask = self.conv_mask(x)
         mask = self.avg_pool2(mask)
         mask = paddle.tanh(mask)
-        mask = mask.reshape((mask.shape[0], -1))
+        mask = mask.reshape((mask.shape[0], mask.shape[1] * mask.shape[2] * mask.shape[3]))
         x = self.avg_pool(x)
-        x = x.reshape((x.shape[0], -1))
+        x = x.reshape((x.shape[0], x.shape[1] * x.shape[2] * x.shape[3]))
         cls_out = self.classifier(x)
         cls_swap = self.classifier_swap(x)
         out = [cls_out, cls_swap, mask]
         return out
+
