@@ -66,7 +66,6 @@ python库：
 - Pillow: 8.2.0
 - tqdm: 4.60.0 
 
-
 ## 4. 快速开始
 
 ### 4.1 下载数据集
@@ -153,9 +152,9 @@ python main.py \
 运行以下命令：
 
 ```sh
-python test.py --gpus=0 --data=CUB --pdparams=./outputs/CUB/checkpoints/dcl_cub-20220416-183150.pdparams --vb=8 --vnw=8 --size=512 --swap_num=7
-python test.py --gpus=0 --data=STCAR --pdparams=./outputs/STCAR/checkpoints/dcl_car-20220416-100532.pdparams --vb=8 --vnw=8 --size=512 --swap_num=7
-python test.py --gpus=0 --data=AIR --pdparams=./outputs/AIR/checkpoints/dcl_air-20220416-100902.pdparams --vb=8 --vnw=8 --size=512 --swap_num=2
+python test.py --gpus=0 --data=CUB --pdparams=./outputs/CUB/checkpoints/dcl_cub-20220416-183150.pdparams --vb=8 --vnw=8 --size=512
+python test.py --gpus=0 --data=STCAR --pdparams=./outputs/STCAR/checkpoints/dcl_car-20220416-100532.pdparams --vb=8 --vnw=8 --size=512
+python test.py --gpus=0 --data=AIR --pdparams=./outputs/AIR/checkpoints/dcl_air-20220416-100902.pdparams --vb=8 --vnw=8 --size=512
 ```
 
 ### 4.5 模型预测
@@ -192,8 +191,10 @@ PaddlePaddle_DCL
 |        eval_model.py	# 验证模型性能
 |        train_model.py	# 模型训练
 |        transforms.py	# DCL机制实现
-|        utils.py	# 辅助训练函数
+|        utils.py	# 辅助训练函数  
+|  export_model.py  # 导出模型静态图
 │  main.py	# 训练函数
+|  infer.py  # 模型静态图推理
 |  predict.py	# 预测单张图片
 │  run.sh 	# 训练脚本
 └─ test.py	# 测试函数
@@ -211,7 +212,23 @@ bash test_tipc/test_train_inference_python.sh test_tipc/configs/DCLNet/train_inf
 
 得到如下结果：
 
-<img src="./resources/tipc.png" style="zoom:60%;" />
+<img src="./resources/tipc-train.png" style="zoom:60%;" />
+
+训练模型的导出：
+
+```sh
+python export_model.py --data CUB_TINY --save_dir outputs/STATIC --model_path outputs/CUB_TINY/checkpoints/dcl_cub_tiny-cub_tiny.pdparams
+```
+
+<img src="./resources/tipc-export.png" style="zoom:60%;" />
+
+单个图片使用模型进行推理：
+
+```sh
+infer.py --model_file outputs/STATIC/model.pdmodel --params_file outputs/STATIC/model.pdiparams --img resources/Black_Footed_Albatross_0001_796111.jpg
+```
+
+<img src="./resources/tipc-infer.png" style="zoom:60%;" />
 
 ## 7. 参考及引用
 
@@ -227,5 +244,5 @@ bash test_tipc/test_train_inference_python.sh test_tipc/configs/DCLNet/train_inf
 
 - [PaddlePaddle](https://github.com/paddlepaddle/paddle)
 
-最后，非常感谢百度举办的[飞桨论文复现挑战赛（第六期）](https://aistudio.baidu.com/aistudio/competition/detail/205/0/introduction)让本人对 PaddlePaddle 理解更加深刻。
+最后，非常感谢百度举办的[飞桨论文复现挑战赛（第六期）](https://aistudio.baidu.com/aistudio/competition/detail/205/0/introduction)让本人对 PaddlePaddle 理解更加深刻，同时感激[DCL](https://github.com/JDAI-CV/DCL)提供的代码，这对我们的复现工作提供了巨大的助力。
 

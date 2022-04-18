@@ -1,10 +1,8 @@
-﻿import os
+import os
 import argparse
-
 from PIL import Image
-
 from paddle.vision.transforms import transforms
-from utils.dataset import MyDataSet, collate_fn4test
+
 import paddle
 from models.dcl import DCLNet as MainModel
 from utils.eval_model import eval_turn
@@ -18,20 +16,20 @@ warnings.filterwarnings('ignore')
 class LoadConfig:
     def __init__(self, args):
         # 预训练权重
-        self.pretrained_model = '/data/models/resnet50.pdparams'
+        self.pretrained_model = '/data/zhangzichao/models/resnet50.pdparams'
         if args.dataset == 'CUB':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/CUB/images'
+            self.rawdata_root = '/data/zhangzichao/datasets/CUB/images'
             self.anno_root = './datasets/CUB'
             self.numcls = 200
         elif args.dataset == 'STCAR':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/StanfordCars/car_ims/'
+            self.rawdata_root = '/data/zhangzichao/datasets/StanfordCars/car_ims/'
             self.anno_root = './datasets/STCAR'
             self.numcls = 196
         elif args.dataset == 'AIR':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/fgvc-aircraft-2013b/data/images/'
+            self.rawdata_root = '/data/zhangzichao/datasets/fgvc-aircraft-2013b/data/images/'
             self.anno_root = './datasets/AIR'
             self.numcls = 100
         else:

@@ -1,4 +1,4 @@
-﻿import os
+import os
 import argparse
 from utils.transforms import load_data_transformers
 from utils.dataset import MyDataSet, collate_fn4test
@@ -14,22 +14,27 @@ warnings.filterwarnings('ignore')
 class LoadConfig:
     def __init__(self, args):
         # 预训练权重
-        self.pretrained_model = '/data/models/resnet50.pdparams'
+        self.pretrained_model = '/data/zhangzichao/models/resnet50.pdparams'
         if args.dataset == 'CUB':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/CUB/images'
+            self.rawdata_root = '/data/zhangzichao/datasets/CUB/images'
             self.anno_root = './datasets/CUB'
             self.numcls = 200
         elif args.dataset == 'STCAR':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/StanfordCars/car_ims/'
+            self.rawdata_root = '/data/zhangzichao/datasets/StanfordCars/car_ims/'
             self.anno_root = './datasets/STCAR'
             self.numcls = 196
         elif args.dataset == 'AIR':
             self.dataset = args.dataset
-            self.rawdata_root = '/data/datasets/fgvc-aircraft-2013b/data/images/'
+            self.rawdata_root = '/data/zhangzichao/datasets/fgvc-aircraft-2013b/data/images/'
             self.anno_root = './datasets/AIR'
             self.numcls = 100
+        elif args.dataset == 'CUB_TINY':
+            self.dataset = args.dataset
+            self.rawdata_root = './datasets/CUB_TINY'
+            self.anno_root = './datasets/CUB_TINY'
+            self.numcls = 4
         else:
             raise Exception('dataset not defined')
         self.test_anno = pd.read_csv(os.path.join(self.anno_root, 'test.txt'), sep=",", header=None,
@@ -48,7 +53,6 @@ def parse_args():
     parser.add_argument('--size', dest='resize_resolution', default=512, type=int)
     parser.add_argument('--crop', dest='crop_resolution', default=448, type=int)
     parser.add_argument('--swap_num', dest='swap_num', default=7, type=int, help='specify a range')
-    parser.add_argument('--not_used', dest='not_used', default='0', type=str)
     args = parser.parse_args()
     return args
 

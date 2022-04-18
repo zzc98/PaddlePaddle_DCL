@@ -69,7 +69,7 @@ def parse_args():
     parser.add_argument('--backbone', dest='backbone', default='resnet50', type=str)
     parser.add_argument('--epoch', dest='epoch', default=120, type=int)
     parser.add_argument('--T_max', dest='T_max', default=90, type=int)
-    parser.add_argument('--ls', dest='label_smooth', default=0.1, type=float)
+    parser.add_argument('--ls', dest='ls', default=0.1, type=float)
     parser.add_argument('--tb', dest='train_batch', default=8, type=int)
     parser.add_argument('--vb', dest='val_batch', default=8, type=int)
     parser.add_argument('--tnw', dest='train_num_workers', default=8, type=int)
@@ -80,6 +80,8 @@ def parse_args():
     parser.add_argument('--size', dest='resize_resolution', default=512, type=int)
     parser.add_argument('--crop', dest='crop_resolution', default=448, type=int)
     parser.add_argument('--swap_num', dest='swap_num', default=7, type=int, help='specify a range')
+    parser.add_argument('--save_model_name', dest='save_model_name', default=None, type=str, help='Model weight name')
+
     args = parser.parse_args()
     return args
 
@@ -120,4 +122,7 @@ if __name__ == '__main__':
           start_epoch=args.start_epoch,
           optimizer=optimizer,
           scheduler=scheduler,
-          data_loader=dataloader)
+          data_loader=dataloader,
+          date_suffix=args.save_model_name,
+          ls=args.ls
+          )
