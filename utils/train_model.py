@@ -4,10 +4,9 @@ import paddle
 import paddle.nn as nn
 from tqdm import tqdm
 from utils.eval_model import eval_turn
-from utils.utils import LabelSmoothingCrossEntropy
 
 
-def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_loader, date_suffix, ls):
+def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_loader, date_suffix):
     # 日志
     if date_suffix is None:
         date_suffix = time.strftime('%Y%m%d-%H%M%S')
@@ -18,7 +17,7 @@ def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_load
     # 训练
     beta = 1
     gamma = 0.01 if config.dataset == 'STCAR' or config.dataset == 'AIR' else 1
-    get_ce_loss = LabelSmoothingCrossEntropy(epsilon=ls)
+    get_ce_loss = nn.CrossEntropyLoss()
     add_loss = nn.L1Loss()
     for epoch in range(start_epoch, epoch_num):
         scheduler.step(epoch)
