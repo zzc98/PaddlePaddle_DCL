@@ -67,14 +67,13 @@ def parse_args():
     parser.add_argument('--gpus', dest='gpus', default='0', type=str)
     parser.add_argument('--data', dest='dataset', default='CUB', type=str)
     parser.add_argument('--backbone', dest='backbone', default='resnet50', type=str)
-    parser.add_argument('--epoch', dest='epoch', default=120, type=int)
-    parser.add_argument('--T_max', dest='T_max', default=90, type=int)
-    parser.add_argument('--ls', dest='ls', default=0.1, type=float)
-    parser.add_argument('--tb', dest='train_batch', default=8, type=int)
-    parser.add_argument('--vb', dest='val_batch', default=8, type=int)
-    parser.add_argument('--tnw', dest='train_num_workers', default=8, type=int)
-    parser.add_argument('--vnw', dest='val_num_workers', default=8, type=int)
-    parser.add_argument('--lr', dest='base_lr', default=0.001, type=float)
+    parser.add_argument('--epoch', dest='epoch', default=360, type=int)
+    parser.add_argument('--lr_step', dest='lr_step', default=60, type=int)
+    parser.add_argument('--tb', dest='train_batch', default=16, type=int)
+    parser.add_argument('--vb', dest='val_batch', default=16, type=int)
+    parser.add_argument('--tnw', dest='train_num_workers', default=16, type=int)
+    parser.add_argument('--vnw', dest='val_num_workers', default=16, type=int)
+    parser.add_argument('--lr', dest='base_lr', default=0.0008, type=float)
     parser.add_argument('--start_epoch', dest='start_epoch', default=0, type=int)
     parser.add_argument('--detail', dest='describe', default='dcl_cub', type=str)
     parser.add_argument('--size', dest='resize_resolution', default=512, type=int)
@@ -112,7 +111,7 @@ if __name__ == '__main__':
 
     # 模型加载、定义优化器
     model = MainModel(Config)
-    scheduler = paddle.optimizer.lr.CosineAnnealingDecay(learning_rate=args.base_lr, T_max=args.T_max)
+    scheduler = paddle.optimizer.lr.StepDecay(learning_rate=args.base_lr, step_size=args.lr_step)
     optimizer = paddle.optimizer.Momentum(learning_rate=scheduler, parameters=model.parameters())
 
     # 开始训练
@@ -124,5 +123,4 @@ if __name__ == '__main__':
           scheduler=scheduler,
           data_loader=dataloader,
           date_suffix=args.save_model_name,
-          ls=args.ls
           )
