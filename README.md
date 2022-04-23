@@ -154,7 +154,7 @@ python main.py \
 
 ```sh
 python test.py --gpus=0 --data=CUB --pdparams=./outputs/CUB/checkpoints/dcl_cub-20220422-143357.pdparams --vb=16 --vnw=16 --size=512
-python test.py --gpus=0 --data=STCAR --pdparams=./outputs/STCAR/checkpoints/dcl_car-20220422-143728.pdparams --vb=8 --vnw=16 --size=512
+python test.py --gpus=0 --data=STCAR --pdparams=./outputs/STCAR/checkpoints/dcl_car-20220422-143728.pdparams --vb=16 --vnw=16 --size=512
 python test.py --gpus=0 --data=AIR --pdparams=./outputs/AIR/checkpoints/dcl_air-20220421-122625.pdparams --vb=16 --vnw=16 --size=512
 ```
 
