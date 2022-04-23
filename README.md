@@ -79,7 +79,7 @@ git clone https://github.com/zzc98/PaddlePaddle_DCL.git
 
 paddle的resnet官方权重：[resnet50](https://paddle-hapi.bj.bcebos.com/models/resnet50.pdparams)，并修改main函数中`LoadConfig`中的预训练权重地址。
 
-复现好的训练权重和日志下载链接：[百度网盘](https://pan.baidu.com/s/16nDqn7enLXx_Iwaw_45R1w?pwd=ajra )，提取码： ajra。
+复现好的训练权重和日志下载链接：[百度网盘](https://pan.baidu.com/s/1lB0ILD7M_2r8KR4XqMXlyQ?pwd=xr3f )，提取码：xr3f 。
 
 
 ### 4.3 训练模型
