@@ -43,7 +43,7 @@ Destruction and Construction Learning for Fine-grained Image Recognition 提出�
 | ------------- | --------- | -------- | ------------------ | ------------------- |
 | CUB200-2011   | ResNet-50 | 87.8     | 87.35 | 87.40 |
 | Stanford Cars | ResNet-50 | 94.5     | 94.3 | 94.3 |
-| FGVC-Aircraft | ResNet-50 | 93.0（swap_num=2） | 91.6（swap_num=7） | 93.0（论文中swap_num=2）91.7（参考repo中swap_num=7） |
+| FGVC-Aircraft | ResNet-50 | 93.0（swap_num=2） | 91.6（swap_num=7） | 93.0（论文中swap_num=2）91.9（参考repo中swap_num=7） |
 
 - 官方的代码中，数据集划分成了训练集、验证集和测试集，但是数据集本身没有验证集，因此复现过程中，删去了验证集的划分
 - 官方代码中，`datasets`文件夹下给出了训练集和测试集的图片路径和对应标签（从1开始），但是数据集读取部分是从0开始，所以需要这些文件中标签都要减1。复现后的版本已经做了修正。
@@ -55,7 +55,7 @@ Destruction and Construction Learning for Fine-grained Image Recognition 提出�
 环境配置：
 
 - Python: 3.7
-- [PaddlePaddle](https://www.paddlepaddle.org.cn/documentation/docs/en/install/index_en.html): 2.2.2
+- PaddlePaddle: 2.2.2
 - 硬件：NVIDIA 3090
 
 python库：
@@ -79,8 +79,7 @@ git clone https://github.com/zzc98/PaddlePaddle_DCL.git
 
 paddle的resnet官方权重：[resnet50](https://paddle-hapi.bj.bcebos.com/models/resnet50.pdparams)，并修改main函数中`LoadConfig`中的预训练权重地址。
 
-复现好的训练权重和日志下载链接：[百度网盘](https://pan.baidu.com/s/1lB0ILD7M_2r8KR4XqMXlyQ?pwd=xr3f )，提取码：xr3f 。
-
+复现好的训练权重和日志下载链接：[百度网盘]( https://pan.baidu.com/s/1ydn-F-_-lBqEQx9NQKOM6w?pwd=x5gc )，提取码：x5gc 。
 
 ### 4.3 训练模型
 
