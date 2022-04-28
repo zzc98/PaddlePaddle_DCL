@@ -4,6 +4,7 @@ import paddle
 import paddle.nn as nn
 from tqdm import tqdm
 from utils.eval_model import eval_turn
+import paddle.distributed as dist
 
 
 def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_loader, date_suffix):
@@ -23,7 +24,11 @@ def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_load
         scheduler.step(epoch)
         model.train()
         losses = [0] * 4
-        for _, data in enumerate(tqdm(data_loader['train'], desc=f'Training epoch {epoch + 1}...')):
+        if dist.get_rank() == 0:
+            d = tqdm(data_loader['train'], desc=f'Training epoch {epoch + 1}...')
+        else:
+            d = data_loader['train']
+        for _, data in enumerate(d):
             inputs, labels, labels_swap, swap_law, img_names = data
             labels = paddle.to_tensor(np.array(labels))
             labels_swap = paddle.to_tensor(np.array(labels_swap))
@@ -45,16 +50,17 @@ def train(config, model, epoch_num, start_epoch, optimizer, scheduler, data_load
         losses[2] /= losses[3]
 
         # 保存损失
-        info = f'Train {epoch + 1} Ce Loss {losses[0]} Swap Loss {losses[1]} Law Loss {losses[2]}\n'
-        print(info, flush=True)
-        with open(log_file, 'a+') as f:
-            f.write(info)
-        # 进行测试，保存测试集正确率，并保存最好的权重
-        acc = eval_turn(model, data_loader['test'], epoch + 1)
-        info = f'Test {epoch + 1} Accuracy={acc}\n'
-        print(info, flush=True)
-        with open(log_file, 'a+') as f:
-            f.write(info)
-        if acc > best_acc:
-            best_acc = acc
-            paddle.save(model.state_dict(), save_params)
+        if dist.get_rank() == 0:
+            info = f'Train {epoch + 1} Ce Loss {losses[0]} Swap Loss {losses[1]} Law Loss {losses[2]}\n'
+            print(info, flush=True)
+            with open(log_file, 'a+') as f:
+                f.write(info)
+            # 进行测试，保存测试集正确率，并保存最好的权重
+            acc = eval_turn(model, data_loader['test'], epoch + 1)
+            info = f'Test {epoch + 1} Accuracy={acc}\n'
+            print(info, flush=True)
+            with open(log_file, 'a+') as f:
+                f.write(info)
+            if acc > best_acc:
+                best_acc = acc
+                paddle.save(model.state_dict(), save_params)
