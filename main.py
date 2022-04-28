@@ -9,7 +9,9 @@ from utils.train_model import train
 from utils.transforms import load_data_transformers
 from utils.dataset import MyDataSet, collate_fn4train, collate_fn4test
 import warnings
+import paddle.distributed as dist
 
+paddle.device.set_device('gpu')
 warnings.filterwarnings('ignore')
 
 
@@ -64,7 +66,6 @@ class LoadConfig:
 
 def parse_args():
     parser = argparse.ArgumentParser(description='dcl parameters')
-    parser.add_argument('--gpus', dest='gpus', default='0', type=str)
     parser.add_argument('--data', dest='dataset', default='CUB', type=str)
     parser.add_argument('--backbone', dest='backbone', default='resnet50', type=str)
     parser.add_argument('--epoch', dest='epoch', default=360, type=int)
@@ -85,10 +86,9 @@ def parse_args():
     return args
 
 
-if __name__ == '__main__':
+def main():
     args = parse_args()
     set_random_seed(seed=2022)
-    paddle.device.set_device(f'gpu:{args.gpus}')
     print(args, flush=True)
     Config = LoadConfig(args)
 
@@ -111,6 +111,8 @@ if __name__ == '__main__':
 
     # 模型加载、定义优化器
     model = MainModel(Config)
+    dist.init_parallel_env()
+    model = paddle.DataParallel(model)
     scheduler = paddle.optimizer.lr.StepDecay(learning_rate=args.base_lr, step_size=args.lr_step)
     optimizer = paddle.optimizer.Momentum(learning_rate=scheduler, parameters=model.parameters())
 
@@ -122,5 +124,8 @@ if __name__ == '__main__':
           optimizer=optimizer,
           scheduler=scheduler,
           data_loader=dataloader,
-          date_suffix=args.save_model_name,
-          )
+          date_suffix=args.save_model_name)
+
+
+if __name__ == '__main__':
+    main()
