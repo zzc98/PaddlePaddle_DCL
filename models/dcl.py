@@ -9,7 +9,7 @@ class DCLNet(nn.Layer):
         self.num_classes = config.numcls
         # 主干网络
         self.model = resnet.resnet50()
-        # self.model.load_dict(paddle.load(config.pretrained_model))
+        self.model.load_dict(paddle.load(config.pretrained_model))
         self.model = nn.Sequential(*list(self.model.children())[:-2])
         self.avg_pool = nn.AdaptiveAvgPool2D((1, 1))
 
