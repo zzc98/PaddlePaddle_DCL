@@ -83,17 +83,16 @@ paddle的resnet官方权重：[resnet50](https://paddle-hapi.bj.bcebos.com/model
 
 ### 4.3 训练模型
 
-`cub`数据集运行以下命令：
+训练时运行以下命令：
 
 ```sh
-python main.py \
---gpus=0 \
+python -m paddle.distribututed.launch --gpus 0,1 main.py \
 --data=CUB \
 --backbone=resnet50 \
 --epoch=360 \
 --lr_step=60 \
---tb=16 \
---vb=16 \
+--tb=8 \
+--vb=8 \
 --tnw=16 \
 --vnw=16 \
 --lr=0.0008 \
@@ -104,48 +103,12 @@ python main.py \
 --swap_num=7
 ```
 
-`car`数据集运行以下命令：
+几点说明：
 
-```sh
-python main.py \
---gpus=0 \
---data=STCAR \
---backbone=resnet50 \
---epoch=360 \
---lr_step=60 \
---tb=16 \
---vb=16 \
---tnw=16 \
---vnw=16 \
---lr=0.0008 \
---start_epoch=0 \
---detail=dcl_car \
---size=512 \
---crop=448 \
---swap_num=7
-```
-
-`aircraft`数据集运行以下命令：
-
-```sh
-python main.py \
---gpus=0 \
---data=AIR \
---backbone=resnet50 \
---epoch=360 \
---lr_step=60 \
---tb=16 \
---vb=16 \
---tnw=16 \
---vnw=16 \
---lr=0.0008 \
---start_epoch=0 \
---detail=dcl_air \
---size=512 \
---crop=448 \
---swap_num=2
-# --swap_num=7和参考repo一致（参考repo并没有针对此数据集修改此参数），但是按照论文配置应为--swap_num=2，“复现精度”表中也给出了两种情况下的复现结果
-```
+- `--data`的值只能是`CUB`、`STCAR`、`AIR`，分别对应三个数据集
+- `--detail`用于说明配置，用于指定保存文件名
+- 飞机数据集上，`--swap_num=7`和参考repo一致（参考repo并没有针对此数据集修改此参数），但是按照论文配置应为`--swap_num=2`，“复现精度”表中也给出了两种情况下的复现结果
+- 我们由于环境原因，无法使用单卡达到论文中的batch。由于我们使用双卡，虽然batch（`--tb`和`--vb`）定义为8，实际是16。
 
 ### 4.4 验证模型
 
