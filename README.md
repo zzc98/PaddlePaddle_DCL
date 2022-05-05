@@ -122,7 +122,7 @@ python test.py --gpus=0 --data=AIR --pdparams=./outputs/AIR/checkpoints/dcl_air-
 
 ### 4.5 单张图片预测
 
-运行以下命令完成单张图片的类别预测：
+运行以下命令完成单张图片的类别预测（我们给出的示例是我们构造的cub tiny，建议您先运行tipc脚本后再测试下面的命令，或者按需更改参数）：
 
 ```sh
 python predict.py --data CUB_TINY --img resources/Black_Footed_Albatross_0001_796111.jpg --pdparams outputs/CUB_TINY/checkpoints/dcl_cub_tiny-cub_tiny.pdparams 
