@@ -4,7 +4,7 @@ python:python3.7
 gpu_list:0
 use_gpu:True
 ##
-norm_train:main.py  --gpus=0 --data=CUB_TINY --backbone=resnet50 --epoch=1 --T_max=60 --tb=2 --vb=8 --tnw=8 --vnw=8 --lr=0.001 --start_epoch=0 --detail=dcl_cub_tiny --size=512 --crop=448 --swap_num=7 --save_model_name=cub_tiny
+norm_train:main.py  --data=CUB_TINY --backbone=resnet50 --epoch=1 --tb=2 --vb=8 --tnw=8 --vnw=8 --lr=0.001 --start_epoch=0 --detail=dcl_cub_tiny --size=512 --crop=448 --swap_num=7 --save_model_name=cub_tiny
 ##
 ===========================eval_params===========================
 eval:null
