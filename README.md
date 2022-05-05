@@ -188,7 +188,7 @@ python export_model.py --data CUB_TINY --save_dir outputs/STATIC --model_path ou
 单个图片使用模型进行推理：
 
 ```sh
-infer.py --model_file outputs/STATIC/model.pdmodel --params_file outputs/STATIC/model.pdiparams --img resources/Black_Footed_Albatross_0001_796111.jpg
+python infer.py --model_file outputs/STATIC/model.pdmodel --params_file outputs/STATIC/model.pdiparams --img resources/Black_Footed_Albatross_0001_796111.jpg
 ```
 
 <img src="./resources/tipc-infer.png" style="zoom:60%;" />
