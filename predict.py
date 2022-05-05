@@ -74,7 +74,7 @@ if __name__ == '__main__':
     test_img = Image.open(args.img).convert('RGB')
     cv_img = cv2.imread(args.img)
     cv2.imshow('pic', cv_img)
-    cv2.waitKey()
+    cv2.waitKey(5)
 
 
     input_tensor = tfs(test_img).unsqueeze(0)
