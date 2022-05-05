@@ -120,13 +120,39 @@ python test.py --gpus=0 --data=STCAR --pdparams=./outputs/STCAR/checkpoints/dcl_
 python test.py --gpus=0 --data=AIR --pdparams=./outputs/AIR/checkpoints/dcl_air-20220421-122625.pdparams --vb=16 --vnw=16 --size=512
 ```
 
-### 4.5 模型预测
+### 4.5 单张图片预测
 
 运行以下命令完成单张图片的类别预测：
 
 ```sh
-python predict.py --data CUB --img resources/Black_Footed_Albatross_0001_796111.jpg --pdparams=./outputs/CUB/checkpoints/dcl_cub-20220422-143357.pdparams
+python predict.py --data CUB_TINY --img resources/Black_Footed_Albatross_0001_796111.jpg --pdparams outputs/CUB_TINY/checkpoints/dcl_cub_tiny-cub_tiny.pdparams 
 ```
+
+![](./resources/vis.png)
+
+![](./resources/predict.png)
+
+### 4.6 模型导出
+
+训练模型的导出：
+
+```sh
+python export_model.py --data CUB_TINY --save_dir outputs/STATIC --model_path outputs/CUB_TINY/checkpoints/dcl_cub_tiny-cub_tiny.pdparams
+```
+
+<img src="./resources/tipc-export.png" style="zoom:60%;" />
+
+### 4.7 模型推理
+
+运行以下命令完成单张图片的类别预测：
+
+```sh
+python infer.py --model_file outputs/STATIC/model.pdmodel --params_file outputs/STATIC/model.pdiparams --img resources/Black_Footed_Albatross_0001_796111.jpg
+```
+
+![](./resources/predict.png)
+
+对于训练得来的同一模型，动静态预测结果相同，可以参考4.5。
 
 ## 5. 项目结构
 
@@ -177,21 +203,7 @@ bash test_tipc/test_train_inference_python.sh test_tipc/configs/DCLNet/train_inf
 
 <img src="./resources/tipc-train.png" style="zoom:60%;" />
 
-训练模型的导出：
-
-```sh
-python export_model.py --data CUB_TINY --save_dir outputs/STATIC --model_path outputs/CUB_TINY/checkpoints/dcl_cub_tiny-cub_tiny.pdparams
-```
-
-<img src="./resources/tipc-export.png" style="zoom:60%;" />
-
-单个图片使用模型进行推理：
-
-```sh
-python infer.py --model_file outputs/STATIC/model.pdmodel --params_file outputs/STATIC/model.pdiparams --img resources/Black_Footed_Albatross_0001_796111.jpg
-```
-
-<img src="./resources/tipc-infer.png" style="zoom:60%;" />
+![](./resources/tipc0505-2.png)
 
 ## 7. 参考及引用
 
