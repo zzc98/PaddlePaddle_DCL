@@ -2,7 +2,7 @@ import os
 import argparse
 from PIL import Image
 from paddle.vision.transforms import transforms
-
+import cv2
 import paddle
 from models.dcl import DCLNet as MainModel
 from utils.eval_model import eval_turn
@@ -10,7 +10,6 @@ import pandas as pd
 import warnings
 
 warnings.filterwarnings('ignore')
-
 
 
 class LoadConfig:
@@ -32,11 +31,18 @@ class LoadConfig:
             self.rawdata_root = '/data/zhangzichao/datasets/fgvc-aircraft-2013b/data/images/'
             self.anno_root = './datasets/AIR'
             self.numcls = 100
+        elif args.dataset == 'CUB_TINY':
+            self.dataset = args.dataset
+            self.rawdata_root = './datasets/CUB_TINY'
+            self.anno_root = './datasets/CUB_TINY'
+            self.numcls = 4
+
         else:
             raise Exception('dataset not defined')
         self.test_anno = pd.read_csv(os.path.join(self.anno_root, 'test.txt'), sep=",", header=None,
                                      names=['ImageName', 'label'])
         self.swap_num = args.swap_num
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description='dcl parameters')
@@ -54,7 +60,6 @@ def parse_args():
     return args
 
 
-
 if __name__ == '__main__':
     args = parse_args()
     paddle.device.set_device(f'gpu:{args.gpus}')
@@ -67,6 +72,11 @@ if __name__ == '__main__':
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
     test_img = Image.open(args.img).convert('RGB')
+    cv_img = cv2.imread(args.img)
+    cv2.imshow('pic', cv_img)
+    cv2.waitKey()
+
+
     input_tensor = tfs(test_img).unsqueeze(0)
     model = MainModel(Config)
     model.load_dict(paddle.load(args.model_weight))
