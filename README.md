@@ -150,7 +150,7 @@ python export_model.py --data CUB_TINY --save_dir outputs/STATIC --model_path ou
 python infer.py --model_file outputs/STATIC/model.pdmodel --params_file outputs/STATIC/model.pdiparams --img resources/Black_Footed_Albatross_0001_796111.jpg
 ```
 
-![](./resources/predict.png)
+![](./resources/tipc-infer.png)
 
 对于训练得来的同一模型，动静态预测结果相同，可以参考4.5。
 
