@@ -1,3 +1,4 @@
+import os
 import paddle
 import paddle.nn as nn
 from paddle.vision.models import resnet
@@ -9,7 +10,8 @@ class DCLNet(nn.Layer):
         self.num_classes = config.numcls
         # 主干网络
         self.model = resnet.resnet50()
-        self.model.load_dict(paddle.load(config.pretrained_model))
+        if os.path.exists(config.pretrained_model):
+            self.model.load_dict(paddle.load(config.pretrained_model))
         self.model = nn.Sequential(*list(self.model.children())[:-2])
         self.avg_pool = nn.AdaptiveAvgPool2D((1, 1))
 
