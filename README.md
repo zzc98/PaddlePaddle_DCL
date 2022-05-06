@@ -11,11 +11,12 @@
     * [4\.2 下载本项目及训练权重](#42-下载本项目及训练权重)
     * [4\.3 训练模型](#43-训练模型)
     * [4\.4 验证模型](#44-验证模型)
-    * [4\.5 模型预测](#45-模型预测)
+    * [4\.5 单张图片预测](#45-单张图片预测)
+    * [4\.6 模型导出](#46-模型导出)
+    * [4\.7 模型推理](#47-模型推理)
   * [5\. 项目结构](#5-项目结构)
   * [6\. TIPC](#6-tipc)
   * [7\. 参考及引用](#7-参考及引用)
-
 
 ## 1. 简介
 
@@ -122,7 +123,7 @@ python test.py --gpus=0 --data=AIR --pdparams=./outputs/AIR/checkpoints/dcl_air-
 
 ### 4.5 单张图片预测
 
-运行以下命令完成单张图片的类别预测（我们给出的示例是我们构造的cub tiny，建议您先运行tipc脚本后再测试下面的命令，或者按需更改参数）：
+运行以下命令完成单张图片的类别预测：
 
 ```sh
 python predict.py --data CUB_TINY --img resources/Black_Footed_Albatross_0001_796111.jpg --pdparams outputs/CUB_TINY/checkpoints/dcl_cub_tiny-cub_tiny.pdparams 
@@ -150,7 +151,7 @@ python export_model.py --data CUB_TINY --save_dir outputs/STATIC --model_path ou
 python infer.py --model_file outputs/STATIC/model.pdmodel --params_file outputs/STATIC/model.pdiparams --img resources/Black_Footed_Albatross_0001_796111.jpg
 ```
 
-![](./resources/tipc-infer.png)
+![](./resources/predict.png)
 
 对于训练得来的同一模型，动静态预测结果相同，可以参考4.5。
 
