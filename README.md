@@ -22,7 +22,7 @@
 
 Destruction and Construction Learning for Fine-grained Image Recognition 提出了一种破坏重建式的细粒度图像分类方法，引入“破坏和构造”流以“破坏”与“重建”图像，学习区分区域和特征。“破坏”学习，将输入图像划分为局部区域，然后通过**区域混淆机制（RCM）**打乱重组。 RCM引入的噪声使用**对抗损失**进行补偿。 “构造”学习中的**区域对齐网络**恢复局部区域的原始空间布局，对局部区域之间的语义相关性进行建模。通过联合训练和参数共享，DCL为分类网络注入了更多可区分的局部细节。整体框架如下：
 
-<img src="./resources/dcl_framework.png" style="zoom:60%;" />
+<img src="resources/dcl_framework.png" style="zoom:60%;" />
 
 - **原论文**：[Destruction and Construction Learning for Fine-grained Image Recognition](https://openaccess.thecvf.com/content_CVPR_2019/papers/Chen_Destruction_and_Construction_Learning_for_Fine-Grained_Image_Recognition_CVPR_2019_paper.pdf).
 
